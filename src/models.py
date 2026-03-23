@@ -2,13 +2,15 @@ import numpy as np
 import pandas as pd
 
 class LinearRegression:
-	def __init__(self, X, y, nombres_features):
+	def __init__(self, X, y, nombres_features, L1 = 0, L2 = 0):
 		self.X = np.column_stack((np.ones(X.shape[0]), X))
 		self.y = y
 		self.nombres_features = nombres_features
+		self.L1 = L1
+		self.L2 = L2
 	
 	def entrenar_pseudo_inv(self):
-		self.w = np.linalg.inv((self.X).T @ self.X) @ (self.X).T @ self.y 
+		self.w = np.linalg.pinv((self.X).T @ self.X) @ (self.X).T @ self.y 
 		return self.w
 	
 	def entrenar_gradiente_descendiente(self,alpha,iters):
@@ -21,6 +23,10 @@ class LinearRegression:
 			self.w = self.w - alpha*grad
 		
 		return self.w
+	
+	def entrenar_ridge_regression
+
+	def entrenar_LASSO
 	
 	def coefs_con_features(self):
 		lista_noms = self.nombres_features.tolist()
