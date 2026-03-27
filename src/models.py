@@ -10,7 +10,7 @@ class LinearRegression:
 		self.L2 = L2
 	
 	def entrenar_pseudo_inv(self):
-		self.w = np.linalg.pinv((self.X).T @ self.X) @ (self.X).T @ self.y 
+		self.w = np.linalg.pinv((self.X).T @ self.X + self.L2*np.identity(self.X.shape[1])) @ (self.X).T @ self.y #cuando hay columnas muy correlacionadas, pinv calcula la mejor aproximacion posible en vez de fallar
 		return self.w
 	
 	def entrenar_gradiente_descendiente(self,alpha,iters):
@@ -19,14 +19,10 @@ class LinearRegression:
 
 		for _ in range (iters):
 			y_pred = self.X @ self.w
-			grad = (2/n)*(self.X).T @ (y_pred - self.y)
+			grad = (2/n)*(self.X).T @ (y_pred - self.y) + self.L1*np.sign(self.w) +2*self.L2*self.w 
 			self.w = self.w - alpha*grad
 		
 		return self.w
-	
-	def entrenar_ridge_regression
-
-	def entrenar_LASSO
 	
 	def coefs_con_features(self):
 		lista_noms = self.nombres_features.tolist()
